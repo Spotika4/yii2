@@ -1,7 +1,7 @@
 <?php
 
 use yii\db\Migration;
-use spotika4\yiicore\models\ar\User;
+use common\components\core\models\ar\User;
 
 
 class m200317_171356_user_init extends Migration{
