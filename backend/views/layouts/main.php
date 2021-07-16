@@ -108,9 +108,9 @@ AppAsset::register($this);
 		<a class="navbar-brand mb-0 h1 mr-xl-5 mr-lg-5 mr-md-5 mr-sm-0 mr-0" href="<?=Url::to(['default/index'])?>"><?=Html::encode(Yii::$app->name)?></a>
 		<div class="collapse navbar-collapse" id="navbar">
 			<? if(!Yii::$app->user->isGuest) : ?>
-				<?=NavbarWidget::widget(['id' => 88])?>
+				<?=NavbarWidget::widget(['id' => 1])?>
 				<ul class="navbar-nav mr-auto"></ul>
-				<?=NavbarWidget::widget(['id' => 89])?>
+				<?=NavbarWidget::widget(['id' => 2])?>
 			<? endif; ?>
 		</div>
 	</nav>

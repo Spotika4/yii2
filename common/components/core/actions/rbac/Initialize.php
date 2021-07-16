@@ -12,8 +12,8 @@ class Initialize extends \common\components\core\models\base\Action {
 		$config = $this->getConfig();
 
 		// правила
+		$rules = [];
 		foreach($config['rules'] as $name => $data){
-			if(!isset($rules)) $rules = [];
 			if(isset($data['class']) && !isset($rules[$name])){
 				$rule = new $data['class'];
 				$rule->name = $name;
@@ -23,8 +23,8 @@ class Initialize extends \common\components\core\models\base\Action {
 		}
 
 		// разрешения
+		$permissions = [];
 		foreach($config['permissions'] as $name => $data){
-			if(!isset($permissions)) $permissions = [];
 			$permissions[$name] = $auth->createPermission($name);
 			if(isset($rules[$name])){
 				$permissions[$name]->ruleName = $rules[$name]->name;
@@ -35,8 +35,8 @@ class Initialize extends \common\components\core\models\base\Action {
 		}
 
 		// роли
+		$roles = [];
 		foreach($config['roles'] as $name => $data){
-			if(!isset($roles)) $roles = [];
 			$roles[$name] = $auth->createRole($name);
 			$roles[$name]->data = $data['data'];
 			$roles[$name]->description = $data['description'];
@@ -46,10 +46,12 @@ class Initialize extends \common\components\core\models\base\Action {
 			}
 			foreach($data['permissions'] as $k => $permission){
 				if(isset($permissions[$permission])){
-					$auth->addChild($roles[$name], $permissions[$permission]);
+					if(!$auth->hasChild($roles[$name], $permissions[$permission])){
+						$auth->addChild($roles[$name], $permissions[$permission]);
+					}
 				}
-				$preview = $roles[$name];
 			}
+			$preview = $roles[$name];
 		}
 		return true;
 	}
