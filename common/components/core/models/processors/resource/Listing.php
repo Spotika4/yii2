@@ -1,0 +1,30 @@
+<?php
+
+namespace common\components\core\models\processors\resource;
+
+
+class Listing extends \common\components\core\models\base\ListingProcessor{
+
+
+	public $context_id;
+
+
+	public function scenarios(){
+		return [
+			self::SCENARIO_DEFAULT => ['context_id']
+		];
+	}
+
+	public function rules(){
+		return [
+			[['context_id'], 'required'],
+		];
+	}
+
+	public function query(){
+		return \common\components\core\models\ar\Resource::find()
+			->select(['id', 'context_id', 'parent', 'title', 'url', 'icon', 'sort'])
+			->where(['context_id' => $this->context_id])
+			->orderBy(['sort' => 'ASC']);
+	}
+}
