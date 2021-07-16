@@ -3,6 +3,7 @@
 /yii_test
 /yii_test.bat
 /yii.bat
+/requirements.php
 
 # phpstorm project files
 .idea
