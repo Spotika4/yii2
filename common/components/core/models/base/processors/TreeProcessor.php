@@ -1,9 +1,9 @@
 <?php
 
-namespace common\components\core\models\base;
+namespace common\components\core\models\base\processors;
 
 
-class TreeProcessor extends \common\components\core\models\base\ObjectProcessor{
+class TreeProcessor extends ObjectProcessor{
 
 
 	public $lexicon;

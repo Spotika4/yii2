@@ -5,7 +5,7 @@ namespace common\components\core\models\processors\context;
 use Yii;
 
 
-class Create extends \common\components\core\models\base\CreateProcessor {
+class Create extends \common\components\core\models\base\processors\CreateProcessor {
 
 
 	public $key;

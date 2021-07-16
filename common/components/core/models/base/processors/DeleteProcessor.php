@@ -1,6 +1,6 @@
 <?php
 
-namespace common\components\core\models\base;
+namespace common\components\core\models\base\processors;
 
 
 abstract class DeleteProcessor extends ObjectProcessor {

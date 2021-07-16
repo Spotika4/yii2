@@ -2,10 +2,8 @@
 
 namespace common\components\core\models\processors\resource;
 
-use Yii;
 
-
-class Update extends \common\components\core\models\base\UpdateProcessor {
+class Update extends \common\components\core\models\base\processors\UpdateProcessor {
 
 
 	public $id;
@@ -35,11 +33,11 @@ class Update extends \common\components\core\models\base\UpdateProcessor {
 
 	public function attributeLabels(){
 		return [
-			'parent' => Yii::t('core', 'parent'),
-			'title' => Yii::t('core', 'title'),
-			'url' => Yii::t('core', 'url'),
-			'icon' => Yii::t('core', 'icon'),
-			'sort' => Yii::t('core', 'sort'),
+			'parent' => \Yii::t('core', 'parent'),
+			'title' => \Yii::t('core', 'title'),
+			'url' => \Yii::t('core', 'url'),
+			'icon' => \Yii::t('core', 'icon'),
+			'sort' => \Yii::t('core', 'sort'),
 		];
 	}
 

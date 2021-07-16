@@ -2,10 +2,8 @@
 
 namespace common\components\core\models\processors\context;
 
-use Yii;
 
-
-class Update extends \common\components\core\models\base\UpdateProcessor {
+class Update extends \common\components\core\models\base\processors\UpdateProcessor {
 
 
 	public $id;
@@ -35,8 +33,8 @@ class Update extends \common\components\core\models\base\UpdateProcessor {
 
 	public function attributeLabels(){
 		return [
-			'key' => Yii::t('core/context', 'context_lbl_key'),
-			'name' => Yii::t('core/context', 'context_lbl_name'),
+			'key' => \Yii::t('core/context', 'context_lbl_key'),
+			'name' => \Yii::t('core/context', 'context_lbl_name'),
 		];
 	}
 }

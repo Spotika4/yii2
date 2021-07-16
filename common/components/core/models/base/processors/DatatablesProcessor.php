@@ -1,13 +1,9 @@
 <?php
 
-namespace common\components\core\models\base;
-
-use yii\db\Query;
-use common\components\core\models\base\ActiveDataProvider;
-use common\components\core\models\validators\ArrayValidator;
+namespace common\components\core\models\base\processors;
 
 
-class DatatablesProcessor extends Processor {
+class DatatablesProcessor extends \common\components\core\models\base\Processor {
 
 
 	public $start;
@@ -36,7 +32,7 @@ class DatatablesProcessor extends Processor {
 	}
 
 	public function byDataProvider($query){
-		$provider = new ActiveDataProvider([
+		$provider = new \common\components\core\models\base\ActiveDataProvider([
 			'query' => $query,
 			'pagination' => [
 				'page' => ($this->start > $this->length || $this->start == $this->length) ? ($this->start / $this->length) : 0,

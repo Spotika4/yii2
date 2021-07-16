@@ -5,7 +5,7 @@ namespace common\components\core\models\processors\menu;
 use Yii;
 
 
-class Update extends \common\components\core\models\base\UpdateProcessor {
+class Update extends \common\components\core\models\base\processors\UpdateProcessor {
 
 
 	public $id;

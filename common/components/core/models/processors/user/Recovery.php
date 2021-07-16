@@ -3,7 +3,7 @@
 namespace common\components\core\models\processors\user;
 
 
-class Recovery extends \common\components\core\models\base\UpdateProcessor {
+class Recovery extends \common\components\core\models\base\processors\UpdateProcessor {
 
 
 	public $email;

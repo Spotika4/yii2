@@ -2,10 +2,8 @@
 
 namespace common\components\core\models\processors\menu\tree;
 
-use Yii;
 
-
-class Create extends \common\components\core\models\base\CreateProcessor {
+class Create extends \common\components\core\models\base\processors\CreateProcessor {
 
 
 	public $menu_id;
@@ -19,11 +17,11 @@ class Create extends \common\components\core\models\base\CreateProcessor {
 
 	public function attributeLabels(){
 		return [
-			'parent' => Yii::t('core', 'parent'),
-			'title' => Yii::t('core', 'title'),
-			'url' => Yii::t('core', 'url'),
-			'icon' => Yii::t('core', 'icon'),
-			'sort' => Yii::t('core', 'sort'),
+			'parent' => \Yii::t('core', 'parent'),
+			'title' => \Yii::t('core', 'title'),
+			'url' => \Yii::t('core', 'url'),
+			'icon' => \Yii::t('core', 'icon'),
+			'sort' => \Yii::t('core', 'sort'),
 		];
 	}
 

@@ -3,7 +3,7 @@
 namespace common\components\core\models\processors\menu\tree;
 
 
-class Read extends \common\components\core\models\base\ReadProcessor{
+class Read extends \common\components\core\models\base\processors\ReadProcessor{
 
 
 	public $id;

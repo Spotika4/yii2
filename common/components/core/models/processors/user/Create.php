@@ -7,7 +7,7 @@ use common\components\core\models\ar\User;
 use common\components\core\models\processors\role\Listing;
 
 
-class Create extends \common\components\core\models\base\CreateProcessor {
+class Create extends \common\components\core\models\base\processors\CreateProcessor {
 
 
 	const SCENARIO_ACCOUNT_ACTIVATE = 'activate';

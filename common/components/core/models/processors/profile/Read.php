@@ -3,7 +3,7 @@
 namespace common\components\core\models\processors\profile;
 
 
-class Read extends \common\components\core\models\base\ReadProcessor {
+class Read extends \common\components\core\models\base\processors\ReadProcessor {
 
 
 	public function query(){

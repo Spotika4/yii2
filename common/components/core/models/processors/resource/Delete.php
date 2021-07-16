@@ -3,7 +3,7 @@
 namespace common\components\core\models\processors\resource;
 
 
-class Delete extends \common\components\core\models\base\DeleteNodeTreeProcessor {
+class Delete extends \common\components\core\models\base\processors\DeleteNodeTreeProcessor {
 
 
 	public $id;

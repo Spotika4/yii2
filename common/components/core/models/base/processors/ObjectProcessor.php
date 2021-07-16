@@ -1,9 +1,9 @@
 <?php
 
-namespace common\components\core\models\base;
+namespace common\components\core\models\base\processors;
 
 
-class ObjectProcessor extends Processor {
+class ObjectProcessor extends \common\components\core\models\base\Processor {
 
 
 	protected $class;

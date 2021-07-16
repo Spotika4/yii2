@@ -7,7 +7,7 @@ use common\components\core\models\ar\User;
 use common\components\core\models\processors\role\Listing;
 
 
-class Update extends \common\components\core\models\base\UpdateProcessor {
+class Update extends \common\components\core\models\base\processors\UpdateProcessor {
 
 
 	public $id;

@@ -3,7 +3,7 @@
 namespace common\components\core\models\processors\user;
 
 
-class Delete extends \common\components\core\models\base\DeleteProcessor {
+class Delete extends \common\components\core\models\base\processors\DeleteProcessor {
 
 
 	public $id;

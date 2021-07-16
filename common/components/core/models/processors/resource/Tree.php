@@ -3,7 +3,7 @@
 namespace common\components\core\models\processors\resource;
 
 
-class Tree extends \common\components\core\models\base\TreeProcessor{
+class Tree extends \common\components\core\models\base\processors\TreeProcessor{
 
 
 	public $lexicon;

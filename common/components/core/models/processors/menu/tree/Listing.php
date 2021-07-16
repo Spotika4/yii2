@@ -3,7 +3,7 @@
 namespace common\components\core\models\processors\menu\tree;
 
 
-class Listing extends \common\components\core\models\base\ListingProcessor{
+class Listing extends \common\components\core\models\base\processors\ListingProcessor{
 
 
 	public $menu_id;

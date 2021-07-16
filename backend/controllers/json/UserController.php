@@ -2,13 +2,6 @@
 
 namespace backend\controllers\json;
 
-use Yii;
-use common\components\core\models\processors\user\Login;
-use common\components\core\models\processors\user\Create;
-use common\components\core\models\processors\user\Recovery;
-use common\components\core\models\processors\user\Update;
-use common\components\core\models\processors\user\Delete;
-
 
 class UserController extends \backend\models\base\JsonController{
 
@@ -33,20 +26,20 @@ class UserController extends \backend\models\base\JsonController{
 	}
 
 	public function actionCreate(){
-		$create = new Create();
-		$create->load(Yii::$app->request->post());
+		$create = new \common\components\core\models\processors\user\Create();
+		$create->load(\Yii::$app->request->post());
 		return $this->render($create->process()->response());
 	}
 
 	public function actionUpdate(){
-		$update = new Update();
-		$update->load(Yii::$app->request->post());
+		$update = new \common\components\core\models\processors\user\Update();
+		$update->load(\Yii::$app->request->post());
 		return $this->render($update->process()->response());
 	}
 
 	public function actionDelete(){
-		$update = new Delete();
-		$update->load(Yii::$app->request->post());
-		return $this->render($update->process()->response());
+		$delete = new \common\components\core\models\processors\user\Delete();
+		$delete->load(\Yii::$app->request->post());
+		return $this->render($delete->process()->response());
 	}
 }

@@ -3,7 +3,7 @@
 namespace common\components\core\models\processors\menu;
 
 
-class Select extends \common\components\core\models\base\SelectProcessor {
+class Select extends \common\components\core\models\base\processors\SelectProcessor {
 
 
 	const SCENARIO_FOR_SELECT = 'select';

@@ -3,7 +3,7 @@
 namespace common\components\core\models\processors\menu;
 
 
-class Datatables extends \common\components\core\models\base\DatatablesProcessor {
+class Datatables extends \common\components\core\models\base\processors\DatatablesProcessor {
 
 
 	public function getTableName(){

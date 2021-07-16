@@ -3,7 +3,7 @@
 namespace common\components\core\models\processors\resource;
 
 
-class Listing extends \common\components\core\models\base\ListingProcessor{
+class Listing extends \common\components\core\models\base\processors\ListingProcessor{
 
 
 	public $context_id;

@@ -3,7 +3,7 @@
 namespace common\components\core\models\processors\user;
 
 
-class Register extends \common\components\core\models\base\CreateProcessor {
+class Register extends \common\components\core\models\base\processors\CreateProcessor {
 
 
 	public $username;

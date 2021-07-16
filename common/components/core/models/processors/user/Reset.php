@@ -3,7 +3,7 @@
 namespace common\components\core\models\processors\user;
 
 
-class Reset extends \common\components\core\models\base\UpdateProcessor {
+class Reset extends \common\components\core\models\base\processors\UpdateProcessor {
 
 
 	public $token;

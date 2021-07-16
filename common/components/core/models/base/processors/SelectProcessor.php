@@ -1,9 +1,9 @@
 <?php
 
-namespace common\components\core\models\base;
+namespace common\components\core\models\base\processors;
 
 
-class SelectProcessor extends \common\components\core\models\base\ObjectProcessor{
+class SelectProcessor extends ObjectProcessor{
 
 
 	public $lexicon;
