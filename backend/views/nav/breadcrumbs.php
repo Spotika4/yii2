@@ -2,7 +2,6 @@
 
 use yii\helpers\Url;
 
-
 ?>
 <? if(!empty($breadcrumbs)) : ?>
 	<nav aria-label="breadcrumb">
@@ -11,11 +10,11 @@ use yii\helpers\Url;
 				<li class="breadcrumb-item">
 					<? if($this->params['resource']['id'] == $breadcrumb['id']) : ?>
 						<span>
-							<?=Yii::t('backend', $breadcrumb['title'])?>
+							<?=$breadcrumb['display']?>
 						</span>
 					<?else : ?>
 						<a href="<?=Url::to([$breadcrumb['url']])?>">
-							<?=Yii::t('backend', $breadcrumb['title'])?>
+							<?=$breadcrumb['display']?>
 						</a>
 					<? endif; ?>
 				</li>

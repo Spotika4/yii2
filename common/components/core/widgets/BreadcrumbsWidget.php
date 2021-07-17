@@ -6,8 +6,9 @@ namespace common\components\core\widgets;
 class BreadcrumbsWidget extends \yii\base\Widget{
 
 
+	public $lexicon = 'core';
 	public $module = false;
- 
+
 
 	public function init(){
 		parent::init();
@@ -19,17 +20,27 @@ class BreadcrumbsWidget extends \yii\base\Widget{
 	public function run(){
 		if($core = $this->module->get('core', false)){
 			$breadcrumbs = [];
-			$resource_id = $core->resource->id;
 			$home = $core->getHomeResource();
-			if($home->id == $resource_id){
+			$home['display'] = \Yii::t($this->lexicon, $home['title']);
+
+			$current = $core->resource->toArray();
+			$current['display'] = \Yii::t($this->lexicon, $current['title']);
+			array_unshift($breadcrumbs, $current);
+
+			if($home['id'] == $current['id']){
 				return false;
 			}
+
+			$resource_id = $current['parent'];
 			while($parent = $this->getResource($resource_id)){
 				$breadcrumb = $parent;
+				$breadcrumb['display'] = \Yii::t($this->lexicon, $breadcrumb['title']);
 				array_unshift($breadcrumbs, $breadcrumb);
 				$resource_id = $parent['parent'];
 			}
-			array_unshift($breadcrumbs, $core->getHomeResource());
+
+			array_unshift($breadcrumbs, $home);
+
 			$viewFile = $this->module->getViewPath() . '/nav/breadcrumbs.php';
 			return \Yii::$app->view->renderFile($viewFile, [
 				'breadcrumbs' => $breadcrumbs,

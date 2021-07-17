@@ -108,9 +108,9 @@ AppAsset::register($this);
 		<a class="navbar-brand mb-0 h1 mr-xl-5 mr-lg-5 mr-md-5 mr-sm-0 mr-0" href="<?=Url::to(['default/index'])?>"><?=Html::encode(Yii::$app->name)?></a>
 		<div class="collapse navbar-collapse" id="navbar">
 			<? if(!Yii::$app->user->isGuest) : ?>
-				<?=NavbarWidget::widget(['id' => 1])?>
+				<?=NavbarWidget::widget(['id' => 1, 'lexicon' => 'backend'])?>
 				<ul class="navbar-nav mr-auto"></ul>
-				<?=NavbarWidget::widget(['id' => 2])?>
+				<?=NavbarWidget::widget(['id' => 2, 'lexicon' => 'backend'])?>
 			<? endif; ?>
 		</div>
 	</nav>
@@ -118,7 +118,7 @@ AppAsset::register($this);
 <header class="container">
 	<div class="row">
 		<div class="col-12">
-			<?=BreadcrumbsWidget::widget()?>
+			<?=BreadcrumbsWidget::widget(['lexicon' => 'backend'])?>
 		</div>
 	</div>
 </header>

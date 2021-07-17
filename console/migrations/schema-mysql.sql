@@ -173,6 +173,7 @@ create index user_id
 
 
 INSERT INTO context (id, `key`, name) VALUES (1, 'backend', 'Backend');
+INSERT INTO context (id, `key`, name) VALUES (2, 'frontend', 'Frontend');
 
 INSERT INTO menu (id, context_id, name) VALUES (1, 1, 'top_menu_title');
 INSERT INTO menu (id, context_id, name) VALUES (2, 1, 'top_right_menu_title');
@@ -185,6 +186,7 @@ INSERT INTO menu_tree (id, menu_id, parent, title, url, icon, sort) VALUES (5, 2
 INSERT INTO menu_tree (id, menu_id, parent, title, url, icon, sort) VALUES (6, 1, 0, 'top_menu_clear_cache_title', '#', 'fas fa-file', 0);
 INSERT INTO menu_tree (id, menu_id, parent, title, url, icon, sort) VALUES (7, 1, 6, 'Backend', '#', 'fas fa-file', 0);
 INSERT INTO menu_tree (id, menu_id, parent, title, url, icon, sort) VALUES (8, 2, 4, 'top_right_logout_title', 'user/logout/', 'fas fa-file', 0);
+INSERT INTO menu_tree (id, menu_id, parent, title, url, icon, sort) VALUES (9, 1, 6, 'Frontend', '#', 'fas fa-file', 0);
 
 INSERT INTO resource (id, context_id, parent, title, url, icon, sort) VALUES (1, 1, 0, 'rm_home_title', '/', 'fas fa-file', 0);
 INSERT INTO resource (id, context_id, parent, title, url, icon, sort) VALUES (2, 1, 0, 'rm_contexts_title', 'contexts/', 'fas fa-file', 0);
@@ -197,3 +199,4 @@ INSERT INTO resource (id, context_id, parent, title, url, icon, sort) VALUES (8,
 INSERT INTO resource (id, context_id, parent, title, url, icon, sort) VALUES (9, 1, 0, 'rm_profile_title', 'profile/', 'fas fa-file', 0);
 INSERT INTO resource (id, context_id, parent, title, url, icon, sort) VALUES (10, 1, 0, 'rm_recovery_title', 'recovery/', 'fas fa-file', 0);
 INSERT INTO resource (id, context_id, parent, title, url, icon, sort) VALUES (11, 1, 0, 'rm_register_title', 'register/', 'fas fa-file', 0);
+INSERT INTO resource (id, context_id, parent, title, url, icon, sort) VALUES (12, 2, 0, 'Home', '/', 'fas fa-file', 0);

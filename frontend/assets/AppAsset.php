@@ -2,21 +2,22 @@
 
 namespace frontend\assets;
 
-use yii\web\AssetBundle;
 
-/**
- * Main frontend application asset bundle.
- */
-class AppAsset extends AssetBundle
-{
-    public $basePath = '@webroot';
-    public $baseUrl = '@web';
-    public $css = [
-        'css/site.css',
-    ];
-    public $js = [
-    ];
-    public $depends = [
-        'yii\web\YiiAsset',
-    ];
+class AppAsset extends \yii\web\AssetBundle{
+
+	public $basePath = '@webroot';
+	public $baseUrl = '@web';
+	public $js = [
+		'js/app.js'
+	];
+	public $css = [
+		'css/app.css'
+	];
+	public $depends = [
+		'common\assets\Backtemplate',
+	];
+
+	public $jsOptions = array(
+		'position' => \yii\web\View::POS_HEAD
+	);
 }

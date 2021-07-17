@@ -22,25 +22,26 @@ class Component extends \yii\base\Component {
 			'basePath' => '@core/messages'
 		];
 		if(!\Yii::$app->request->isConsoleRequest){
-			$this->context = $this->getCurrentContext();
-			if(\Yii::$app->request->isAjax){
-				\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-			}else if($this->resource = $this->getCurrentResource()){
-				\Yii::$app->view->params['context'] = $this->context->toArray();
-				\Yii::$app->view->params['resource'] = $this->resource->toArray();
+			if($this->context = $this->getCurrentContext()){
+				if(\Yii::$app->request->isAjax){
+					\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+				}else if($this->resource = $this->getCurrentResource()){
+					\Yii::$app->view->params['context'] = $this->context->toArray();
+					\Yii::$app->view->params['resource'] = $this->resource->toArray();
+				}
+				\Yii::$app->i18n->translations[\Yii::$app->id . '*'] = [
+					'class' => 'yii\i18n\PhpMessageSource',
+					'basePath' => \Yii::$app->getBasePath() . '/messages'
+				];
+				\Yii::$app->controllerNamespace .= '\\' . \Yii::$app->response->format;
 			}
-			\Yii::$app->i18n->translations[\Yii::$app->id . '*'] = [
-				'class' => 'yii\i18n\PhpMessageSource',
-				'basePath' => \Yii::$app->getBasePath() . '/messages'
-			];
-			\Yii::$app->controllerNamespace .= '\\' . \Yii::$app->response->format;
 		}
 	}
 
 	public function getHomeResource(){
 		return \common\components\core\models\ar\Resource::find()
 			->select(['id', 'context_id', 'parent', 'title', 'url', 'icon'])
-			->where(['context_id' => $this->context->id, 'url' => '/'])->one();
+			->where(['context_id' => $this->context->id, 'url' => '/'])->asArray()->one();
 	}
 
 	public function getCurrentResource(){
