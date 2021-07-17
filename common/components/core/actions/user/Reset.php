@@ -13,6 +13,6 @@ class Reset extends \common\components\core\models\base\Action {
 				'processor' => $processor,
 			]);
 		}
-		throw new \yii\web\NotFoundHttpException(\Yii::t('yiicore', 'error_not_found_message'));
+		throw new \yii\web\NotFoundHttpException(\Yii::t('core', 'error_not_found_message'));
 	}
 }

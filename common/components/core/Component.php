@@ -2,8 +2,6 @@
 
 namespace common\components\core;
 
-use \common\components\core\models\ar\Context;
-
 
 class Component extends \yii\base\Component {
 
@@ -27,12 +25,9 @@ class Component extends \yii\base\Component {
 			$this->context = $this->getCurrentContext();
 			if(\Yii::$app->request->isAjax){
 				\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-			}else{
-				$this->resource = $this->getCurrentResource();
-				if($this->resource){
-					\Yii::$app->view->params['context'] = $this->context->toArray();
-					\Yii::$app->view->params['resource'] = $this->resource->toArray();
-				}
+			}else if($this->resource = $this->getCurrentResource()){
+				\Yii::$app->view->params['context'] = $this->context->toArray();
+				\Yii::$app->view->params['resource'] = $this->resource->toArray();
 			}
 			\Yii::$app->i18n->translations[\Yii::$app->id . '*'] = [
 				'class' => 'yii\i18n\PhpMessageSource',
@@ -49,9 +44,7 @@ class Component extends \yii\base\Component {
 	}
 
 	public function getCurrentResource(){
-		if(!$url = \Yii::$app->request->getPathInfo()){
-			$url = '/';
-		}
+		if(!$url = \Yii::$app->request->getPathInfo()) $url = '/';
 		return \common\components\core\models\ar\Resource::find()
 			->select(['id', 'context_id', 'parent', 'title', 'url', 'icon'])
 			->where(['context_id' => $this->context->id, 'url' => $url])->one();
@@ -59,8 +52,7 @@ class Component extends \yii\base\Component {
 
 	public function getCurrentContext(){
 		return $this->context = \common\components\core\models\ar\Context::find()
-			->select(['id', 'key', 'name'])
-			->where(['key' => \Yii::$app->id])->one();
+			->select(['id', 'key', 'name'])->where(['key' => \Yii::$app->id])->one();
 	}
 
 	public function getRuntimes($context){
@@ -93,5 +85,16 @@ class Component extends \yii\base\Component {
 
 	public function getRbacPath(){
 		return $this->rbacPath;
+	}
+
+	public function sendMail($email, $subject = '', $view = '', $params = []){
+		$mailer = \Yii::$app->mailer;
+		$viewPath = $this->getMailPath() . '/' . \Yii::$app->language . '/';
+		$mailer->setViewPath($viewPath);
+		$mailer->view->params['title'] = $subject;
+		$message = $mailer->compose($view, $params);
+		$message->setSubject($subject)->setTo($email)
+			->setFrom([\Yii::$app->params['senderEmail'] => \Yii::$app->name]);
+		return $message->send();
 	}
 }

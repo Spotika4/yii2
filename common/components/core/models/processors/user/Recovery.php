@@ -32,7 +32,7 @@ class Recovery extends \common\components\core\models\base\processors\UpdateProc
 		$token = $this->object->generateToken('verification_token');
 		$params = ['user' => $this->object, 'token' => $token];
 		$subject = \Yii::t('core', 'user_recovery_title');
-		if($this->object->send('passwordRecovery', $params, $subject)){
+		if(\Yii::$app->get('core')->sendMail($this->email, $subject, 'passwordRecovery', $params)){
 			$this->addMessage(\Yii::t('core', 'user_send_reset_success'));
 			return true;
 		}

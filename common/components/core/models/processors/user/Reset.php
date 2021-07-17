@@ -22,18 +22,21 @@ class Reset extends \common\components\core\models\base\processors\UpdateProcess
 	}
 
 	public function query(){
-		return \common\components\core\models\ar\User::findByToken('verification_token', $this->token, false);
+		return \common\components\core\models\ar\User::find()->from('{{%user}} u')->select(['u.*', 'o.value'])
+			->leftJoin('{{%user_option}} o', 'o.user_id = u.id')->where(['o.key' => 'verification_token', 'o.value' => $this->token]);
 	}
 
 	public function beforeSave(){
 		$password = $this->object->setPassword();
+		$this->object->setAttribute('status', \common\components\core\models\ar\User::STATUS_ACTIVE);
+		$this->object->deleteOption('verification_token');
 		if($this->object->save(false)){
-			$this->object->deleteOption('verification_token');
-			$this->addMessage(\Yii::t('core/user', 'user_reset_success'));
+			$this->addMessage(\Yii::t('core', 'user_reset_success'));
+
 			$params = ['user' => $this->object, 'password' => $password];
-			$subject = \Yii::t('core/user', 'user_reset_title');
-			if($this->object->send('passwordInfo', $params, $subject)){
-				$this->addMessage(\Yii::t('core/user', 'user_send_reset_info_success'));
+			$subject = \Yii::t('core', 'user_reset_title');
+			if(\Yii::$app->get('core')->sendMail($this->object->email, $subject, 'passwordInfo', $params)){
+				$this->addMessage(\Yii::t('core', 'user_send_reset_info_success'));
 				return true;
 			}
 			$this->addMessage(\Yii::t('core', 'mail_send_error'));

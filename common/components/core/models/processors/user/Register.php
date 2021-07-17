@@ -54,8 +54,10 @@ class Register extends \common\components\core\models\base\processors\CreateProc
 		}
 		$this->setAttributes(['username' => '', 'email' => '']);
 		$this->addMessage(\Yii::t('core', 'user_register_success'));
+
+		$subject = \Yii::t('core', 'user_register_title');
 		$params = ['user' => $this->object, 'password' => $this->password, 'token' => $this->object->generateToken('verification_token')];
-		if($this->object->send('accountActivate', $params, \Yii::t('core', 'user_register_title'))){
+		if(\Yii::$app->get('core')->sendMail($this->object->email, $subject, 'accountActivate', $params)){
 			$this->addMessage(\Yii::t('core', 'user_send_register_info_success'));
 			return true;
 		}

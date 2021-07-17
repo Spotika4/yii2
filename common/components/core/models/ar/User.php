@@ -137,17 +137,6 @@ class User extends \common\components\core\models\base\ActiveRecord implements \
 		return UserOption::deleteAll(['user_id' => $this->getId(), 'key' => $keys]);
 	}
 
-	public function send($view, $params, $subject){
-		$mailer = \Yii::$app->mailer;
-		$mailer->setViewPath(\Yii::$app->get('core')->getMailPath());
-		$mailer->view->params['title'] = $subject;
-		$message = $mailer->compose($view, $params);
-		$message->setSubject($subject)
-			->setTo($this->getAttribute('email'))
-			->setFrom([\Yii::$app->params['senderEmail'] => \Yii::$app->name]);
-		return $message->send();
-	}
-
 	public function setCookie($key, $value){
 		Yii::$app->response->cookies->add(new Cookie([
 			'httpOnly' => false, 'name' => $key, 'value' => $value

@@ -1,5 +1,7 @@
 <?php
 
+use yii\helpers\Url;
+use yii\helpers\Html;
 use yii\bootstrap4\Alert;
 use yii\bootstrap4\ActiveForm;
 
@@ -20,6 +22,16 @@ $this->title = Yii::$app->name;
 						],
 						'body' => implode('<br />', $processor->getMessage())
 					]);?>
+				</div>
+				<div class="card-footer">
+					<div class="row justify-content-md-center">
+						<div class="col-12">
+							<?=Html::tag('a', Yii::t('core', 'login'), [
+								'class' => 'btn btn-primary d-block w-100',
+								'href'  => Url::to(['default/login']),
+							])?>
+						</div>
+					</div>
 				</div>
 				<?php ActiveForm::end(); ?>
 			</div>
