@@ -24,12 +24,6 @@ class MenuTreeController extends \backend\models\base\JsonController{
 		return $this->render($delete->process()->response());
 	}
 
-	public function actionListing(){
-		$listing = new \common\components\core\models\processors\menu\tree\Listing();
-		$listing->load(\Yii::$app->request->post());
-		return $this->render($listing->process()->response());
-	}
-
 	public function actionTree(){
 		$tree = new \common\components\core\models\processors\menu\tree\Tree();
 		$tree->load(\Yii::$app->request->post());

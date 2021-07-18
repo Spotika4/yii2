@@ -2,8 +2,6 @@
 
 namespace backend\controllers\json;
 
-use Yii;
-
 
 class ResourceController extends \backend\models\base\JsonController{
 
@@ -24,12 +22,6 @@ class ResourceController extends \backend\models\base\JsonController{
 		$delete = new \common\components\core\models\processors\resource\Delete();
 		$delete->load(\Yii::$app->request->post());
 		return $this->render($delete->process()->response());
-	}
-
-	public function actionListing(){
-		$listing = new \common\components\core\models\processors\resource\Listing();
-		$listing->load(\Yii::$app->request->post());
-		return $this->render($listing->process()->response());
 	}
 
 	public function actionTree(){
