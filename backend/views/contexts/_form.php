@@ -60,14 +60,14 @@ use yii\bootstrap4\ActiveForm;
 									<div class="container">
 										<div class="row">
 											<div class="col-12 p-0">
-												<button type="button" class="btn btn-sm btn-primary" id="BTN_CREATE_RESOURCE_MODAL"><i class="fas fa-plus"></i></button>
-												<button type="button" class="btn btn-sm btn-secondary" id="BTN_UPDATE_RESOURCE_MODAL"><i class="fas fa-edit"></i></button>
-												<button type="button" class="btn btn-sm btn-danger" id="BTN_DELETE_RESOURCE_MODAL"><i class="fas fa-trash"></i></button>
+												<button type="button" class="btn btn-sm btn-primary" id="BTN_CREATE_CONTROLLER_MODAL"><i class="fas fa-plus"></i></button>
+												<button type="button" class="btn btn-sm btn-secondary" id="BTN_UPDATE_CONTROLLER_MODAL"><i class="fas fa-edit"></i></button>
+												<button type="button" class="btn btn-sm btn-danger" id="BTN_DELETE_CONTROLLER_MODAL"><i class="fas fa-trash"></i></button>
 											</div>
 										</div>
 									</div>
 								</div>
-								<div id="RESOURCE_WRAPPER" class="mb-5">
+								<div id="CONTROLLER_WRAPPER" class="mb-5">
 
 								</div>
 							</div>
@@ -121,7 +121,7 @@ use yii\bootstrap4\ActiveForm;
 </div>
 
 <? if($update) : ?>
-	<div id="RESOURCE_MODAL" class="modal" tabindex="-1" role="dialog">
+	<div id="CONTROLLER_MODAL" class="modal" tabindex="-1" role="dialog">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -131,7 +131,7 @@ use yii\bootstrap4\ActiveForm;
 					</button>
 				</div>
 				<div class="modal-body">
-					<?php $form = ActiveForm::begin(['enableClientScript' => false, 'id' => 'RESOURCE_FORM', 'action' => '#']); ?>
+					<?php $form = ActiveForm::begin(['enableClientScript' => false, 'id' => 'CONTROLLER_FORM', 'action' => '#']); ?>
 					<?=Html::tag('input', false, ['type' => 'hidden', 'name' => 'id', 'value' => ''])?>
 					<?=Html::tag('input', false, ['type' => 'hidden', 'name' => 'context_id', 'value' => $context['id']])?>
 					<div class="form-row">
@@ -194,7 +194,7 @@ use yii\bootstrap4\ActiveForm;
 					<?php ActiveForm::end(); ?>
 				</div>
 				<div class="modal-footer">
-					<?=Html::submitButton(Yii::t('core', 'save'), ['class' => 'btn btn-primary', 'form' => 'RESOURCE_FORM'])?>
+					<?=Html::submitButton(Yii::t('core', 'save'), ['class' => 'btn btn-primary', 'form' => 'CONTROLLER_FORM'])?>
 					<?=Html::tag('a', Yii::t('core', 'back'), ['href' => '#', 'class' => 'btn btn-light', 'data-dismiss'=>'modal', 'aria-label'=>'Close'])?>
 				</div>
 			</div>
@@ -316,11 +316,11 @@ use yii\bootstrap4\ActiveForm;
 <script>
 	<? if($update) : ?>
 		/** Управление картой контекста **/
-		function OPEN_CREATE_RESOURCE_MODAL() {
-			let form = $("#RESOURCE_FORM");
-			let modal = $("#RESOURCE_MODAL");
-			let wrapper = $("#RESOURCE_WRAPPER");
-			let url = '<?=Url::to(['resource/create'])?>';
+		function OPEN_CREATE_CONTROLLER_MODAL() {
+			let form = $("#CONTROLLER_FORM");
+			let modal = $("#CONTROLLER_MODAL");
+			let wrapper = $("#CONTROLLER_WRAPPER");
+			let url = '<?=Url::to(['controller/create'])?>';
 			let title = '<?=Yii::t('core', 'object_action_create')?>';
 
 			let selected = { data: { id: '0'}};
@@ -342,11 +342,11 @@ use yii\bootstrap4\ActiveForm;
 			modal.modal('show');
 		}
 
-		function OPEN_UPDATE_RESOURCE_MODAL() {
-			let form = $("#RESOURCE_FORM");
-			let modal = $("#RESOURCE_MODAL");
-			let wrapper = $("#RESOURCE_WRAPPER");
-			let url = '<?=Url::to(['resource/update'])?>';
+		function OPEN_UPDATE_CONTROLLER_MODAL() {
+			let form = $("#CONTROLLER_FORM");
+			let modal = $("#CONTROLLER_MODAL");
+			let wrapper = $("#CONTROLLER_WRAPPER");
+			let url = '<?=Url::to(['controller/update'])?>';
 			let title = '<?=Yii::t('core', 'object_action_update')?>';
 
 			let ref = wrapper.jstree(true);
@@ -369,8 +369,8 @@ use yii\bootstrap4\ActiveForm;
 			modal.modal('show');
 		}
 
-		function OPEN_DELETE_RESOURCE_MODAL() {
-			let wrapper = $("#RESOURCE_WRAPPER");
+		function OPEN_DELETE_CONTROLLER_MODAL() {
+			let wrapper = $("#CONTROLLER_WRAPPER");
 			let title = '<?=Yii::t('core', 'object_action_delete')?>';
 			let message = '<?=Yii::t('core', 'object_realy_delete')?>';
 
@@ -381,7 +381,7 @@ use yii\bootstrap4\ActiveForm;
 
 			$.fn.app('confirm', {
 				ajax: {
-					url: '<?=Url::to(['resource/delete'])?>',
+					url: '<?=Url::to(['controller/delete'])?>',
 					data: {
 						id: selected.id
 					},
@@ -390,38 +390,38 @@ use yii\bootstrap4\ActiveForm;
 				message: message,
 				after: function(result){
 					if(result === true){
-						//LOAD_RESOURCES(true);
+						//LOAD_CONTROLLERS(true);
 						ref.delete_node(sel);
 					}
 				}
 			});
 		}
 
-		function LOAD_RESOURCES(reload = false){
-			let url = '<?=Url::to(['resource/tree'])?>';
+		function LOAD_CONTROLLERS(reload = false){
+			let url = '<?=Url::to(['controller/tree'])?>';
 			let data = {'context_id': <?=$context['id']?>, 'lexicon': 'backend' };
 			if(reload === true){
-				$('#RESOURCE_WRAPPER').app('jstree', {
+				$('#CONTROLLER_WRAPPER').app('jstree', {
 					reload: reload, url: url, data: data
 				});
 			}else{
-				$('#RESOURCE_WRAPPER').app('jstree', {
+				$('#CONTROLLER_WRAPPER').app('jstree', {
 					reload: reload, url: url, data: data,
 					menu: {
 						"items": function ($node) {
 							return {
 								create: {
 									label: "<?=Yii::t('core', 'add')?>",
-									action: OPEN_CREATE_RESOURCE_MODAL
+									action: OPEN_CREATE_CONTROLLER_MODAL
 								},
 								update: {
 									label: "<?=Yii::t('core', 'update')?>",
-									action: OPEN_UPDATE_RESOURCE_MODAL
+									action: OPEN_UPDATE_CONTROLLER_MODAL
 								},
 								delete: {
 									label: "<?=Yii::t('core', 'delete')?>",
 									separator_before: true,
-									action: OPEN_DELETE_RESOURCE_MODAL
+									action: OPEN_DELETE_CONTROLLER_MODAL
 								}
 							};
 						}
@@ -596,24 +596,24 @@ use yii\bootstrap4\ActiveForm;
 		});
 
 		<? if($update) : ?>
-			LOAD_RESOURCES();
+			LOAD_CONTROLLERS();
 
 			// кнопки для вызова модальных окон с формами
 			// для редактирования ресурсов
-			$('#BTN_CREATE_RESOURCE_MODAL').click(function(){
-				OPEN_CREATE_RESOURCE_MODAL();
+			$('#BTN_CREATE_CONTROLLER_MODAL').click(function(){
+				OPEN_CREATE_CONTROLLER_MODAL();
 			});
 
-			$('#BTN_UPDATE_RESOURCE_MODAL').click(function(){
-				OPEN_UPDATE_RESOURCE_MODAL();
+			$('#BTN_UPDATE_CONTROLLER_MODAL').click(function(){
+				OPEN_UPDATE_CONTROLLER_MODAL();
 			});
 
-			$('#BTN_DELETE_RESOURCE_MODAL').click(function(){
-				OPEN_DELETE_RESOURCE_MODAL();
+			$('#BTN_DELETE_CONTROLLER_MODAL').click(function(){
+				OPEN_DELETE_CONTROLLER_MODAL();
 			});
 
 			// вылидация формы редактирования ресурсов
-			$("#RESOURCE_FORM").app('validate', {
+			$("#CONTROLLER_FORM").app('validate', {
 				reset: true,
 				rules: {
 					parent: {
@@ -633,8 +633,8 @@ use yii\bootstrap4\ActiveForm;
 					}
 				},
 				after: function(result){
-					LOAD_RESOURCES(true);
-					$('#RESOURCE_MODAL').modal('toggle');
+					LOAD_CONTROLLERS(true);
+					$('#CONTROLLER_MODAL').modal('toggle');
 				}
 			});
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace common\components\core\models\processors\resource;
+namespace common\components\core\models\processors\controller;
 
 
 class Tree extends \common\components\core\models\base\processors\TreeProcessor{
@@ -23,7 +23,7 @@ class Tree extends \common\components\core\models\base\processors\TreeProcessor{
 	}
 
 	public function query(){
-		return \common\components\core\models\ar\Resource::find()
+		return \common\components\core\models\ar\Controller::find()
 			->select(['id', 'context_id', 'parent', 'title', 'url', 'icon', 'sort'])
 			->where(['context_id' => $this->context_id])
 			->orderBy(['sort' => 'ASC']);

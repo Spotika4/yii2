@@ -3,11 +3,11 @@
 namespace common\components\core\models\ar;
 
 
-class Resource extends \common\components\core\models\base\ActiveRecord {
+class Controller extends \common\components\core\models\base\ActiveRecord {
 
 
 	public static function tableName(){
-		return '{{%resource}}';
+		return '{{%controller}}';
 	}
 
 	public function rules(){

@@ -11,8 +11,9 @@ class Component extends \yii\base\Component {
 	public $mailPath;
 	public $messagesPath;
 	public $runtimes = [];
-	public $context;
-	public $resource;
+	public $context = false;
+	public $resource = false;
+	public $controller = false;
 
 
 	public function init(){
@@ -22,38 +23,51 @@ class Component extends \yii\base\Component {
 			'basePath' => '@core/messages'
 		];
 		if(!\Yii::$app->request->isConsoleRequest){
-			if($this->context = $this->getCurrentContext()){
-				if(\Yii::$app->request->isAjax){
-					\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-				}else if($this->resource = $this->getCurrentResource()){
-					\Yii::$app->view->params['context'] = $this->context->toArray();
-					\Yii::$app->view->params['resource'] = $this->resource->toArray();
-				}
-				\Yii::$app->i18n->translations[\Yii::$app->id . '*'] = [
-					'class' => 'yii\i18n\PhpMessageSource',
-					'basePath' => \Yii::$app->getBasePath() . '/messages'
-				];
-				\Yii::$app->controllerNamespace .= '\\' . \Yii::$app->response->format;
+			if(!$this->context = $this->getCurrentContext()){
+				\Yii::error('Context "' . \Yii::$app->id . '"" not found');
+				return false;
 			}
+			if(\Yii::$app->request->isAjax){
+				\Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+			}
+			\Yii::$app->view->params['context'] = $this->context->toArray();
+			\Yii::$app->i18n->translations[\Yii::$app->id . '*'] = [
+				'class' => 'yii\i18n\PhpMessageSource',
+				'basePath' => \Yii::$app->getBasePath() . '/messages'
+			];
+			\Yii::$app->controllerNamespace .= '\\' . \Yii::$app->response->format;
 		}
 	}
 
 	public function getHomeResource(){
-		return \common\components\core\models\ar\Resource::find()
+		return \common\components\core\models\ar\Controller::find()
 			->select(['id', 'context_id', 'parent', 'title', 'url', 'icon'])
 			->where(['context_id' => $this->context->id, 'url' => '/'])->asArray()->one();
 	}
 
 	public function getCurrentResource(){
-		if(!$url = \Yii::$app->request->getPathInfo()) $url = '/';
-		return \common\components\core\models\ar\Resource::find()
+		if(!$this->resource){
+			if(!$url = \Yii::$app->request->getPathInfo()) $url = '/';
+			$this->resource = \common\components\core\models\ar\Controller::find()
+				->select(['id', 'context_id', 'parent', 'title', 'url', 'icon'])
+				->where(['context_id' => $this->context->id, 'url' => $url])->one();
+		}
+		return $this->resource;
+	}
+
+	public function getController($controller_url){
+		$this->controller = \common\components\core\models\ar\Controller::find()
 			->select(['id', 'context_id', 'parent', 'title', 'url', 'icon'])
-			->where(['context_id' => $this->context->id, 'url' => $url])->one();
+			->where(['context_id' => $this->context->id, 'url' => $controller_url])->one();
+		return $this->controller;
 	}
 
 	public function getCurrentContext(){
-		return $this->context = \common\components\core\models\ar\Context::find()
-			->select(['id', 'key', 'name'])->where(['key' => \Yii::$app->id])->one();
+		if(!$this->context){
+			$this->context = \common\components\core\models\ar\Context::find()
+				->select(['id', 'key', 'name'])->where(['key' => \Yii::$app->id])->one();
+		}
+		return $this->context;
 	}
 
 	public function getRuntimes($context){

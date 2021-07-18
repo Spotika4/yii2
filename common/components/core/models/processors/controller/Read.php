@@ -1,6 +1,6 @@
 <?php
 
-namespace common\components\core\models\processors\resource;
+namespace common\components\core\models\processors\controller;
 
 
 class Read extends \common\components\core\models\base\processors\ReadProcessor{
@@ -22,7 +22,7 @@ class Read extends \common\components\core\models\base\processors\ReadProcessor{
 	}
 
 	public function query(){
-		return \common\components\core\models\ar\Resource::find()
+		return \common\components\core\models\ar\Controller::find()
 			->select(['id', 'context_id', 'parent', 'title', 'url', 'icon', 'sort'])
 			->where(['id' => $this->id]);
 	}

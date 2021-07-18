@@ -1,6 +1,6 @@
 <?php
 
-namespace common\components\core\models\processors\resource;
+namespace common\components\core\models\processors\controller;
 
 
 class Update extends \common\components\core\models\base\processors\UpdateProcessor {
@@ -13,7 +13,7 @@ class Update extends \common\components\core\models\base\processors\UpdateProces
 	public $url;
 	public $icon;
 	public $sort;
-	protected $class  ='common\components\core\models\ar\Resource';
+	protected $class  = 'common\components\core\models\ar\Controller';
 
 
 	public function rules(){

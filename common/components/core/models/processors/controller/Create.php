@@ -1,6 +1,6 @@
 <?php
 
-namespace common\components\core\models\processors\resource;
+namespace common\components\core\models\processors\controller;
 
 
 class Create extends \common\components\core\models\base\processors\CreateProcessor {
@@ -12,7 +12,7 @@ class Create extends \common\components\core\models\base\processors\CreateProces
 	public $url;
 	public $icon;
 	public $sort;
-	protected $class  ='common\components\core\models\ar\Resource';
+	protected $class  = 'common\components\core\models\ar\Controller';
 
 
 	public function attributeLabels(){

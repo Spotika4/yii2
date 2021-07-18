@@ -59,7 +59,8 @@
     ],
     "autoload": {
         "psr-4": {
-            "component\\": "common/components"
+            "component\\": "common/components",
+            "spotika4\\yiicrm\\": "../yiicrm"
         }
     }
 }

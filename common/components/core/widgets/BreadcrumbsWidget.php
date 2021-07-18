@@ -19,6 +19,8 @@ class BreadcrumbsWidget extends \yii\base\Widget{
 
 	public function run(){
 		if($core = $this->module->get('core', false)){
+			if(!$core->resource) return false;
+
 			$breadcrumbs = [];
 			$home = $core->getHomeResource();
 			$home['display'] = \Yii::t($this->lexicon, $home['title']);
@@ -49,7 +51,7 @@ class BreadcrumbsWidget extends \yii\base\Widget{
 	}
 
 	public function getResource($id){
-		return \common\components\core\models\ar\Resource::find()
+		return \common\components\core\models\ar\Controller::find()
 			->select(['id', 'context_id', 'parent', 'title', 'url', 'icon'])->where(['id' => $id])->asArray()->one();
 	}
 }
