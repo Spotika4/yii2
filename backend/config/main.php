@@ -53,7 +53,7 @@ return [
 					'suffix' => '',
 					'route' => 'default/index',
 				],
-				'<a:(register|activation|login|recovery|reset)>' => 'default/<a>',
+				'<a:(index|login|recovery|reset)>' => 'default/<a>',
 				'<c:[\w\-]+>/' => '<c>/',
 				'<c:[\w\-]+>/<a:[\w\-]+>' => '<c>/<a>',
 			],

@@ -8,7 +8,7 @@ use yii\helpers\Url;
 		<ol class="breadcrumb">
 			<? foreach($breadcrumbs as $k => $breadcrumb) : ?>
 				<li class="breadcrumb-item">
-					<? if($this->params['resource']['id'] == $breadcrumb['id']) : ?>
+					<? if($this->params['controller']['id'] == $breadcrumb['id']) : ?>
 						<span>
 							<?=$breadcrumb['display']?>
 						</span>

@@ -6,19 +6,20 @@ namespace common\components\core\models\processors\menu;
 class Delete extends \common\components\core\models\base\processors\DeleteProcessor {
 
 
-	public $id;
+	public $key;
+	protected $pk = 'key';
 	protected $class  ='common\components\core\models\ar\Menu';
 
 
 	public function scenarios(){
 		return [
-			self::SCENARIO_DEFAULT => ['id']
+			self::SCENARIO_DEFAULT => ['key']
 		];
 	}
 
 	public function rules(){
 		return [
-			[['id'], 'required'],
+			[['key'], 'required'],
 		];
 	}
 }

@@ -6,7 +6,7 @@ namespace common\components\core\models\processors\menu\tree;
 class Create extends \common\components\core\models\base\processors\CreateProcessor {
 
 
-	public $menu_id;
+	public $menu_key;
 	public $parent;
 	public $title;
 	public $url;
@@ -27,13 +27,13 @@ class Create extends \common\components\core\models\base\processors\CreateProces
 
 	public function scenarios(){
 		return [
-			self::SCENARIO_DEFAULT => ['menu_id', 'parent', 'title', 'url', 'icon', 'sort'],
+			self::SCENARIO_DEFAULT => ['menu_key', 'parent', 'title', 'url', 'icon', 'sort'],
 		];
 	}
 
 	public function rules(){
 		return [
-			[['menu_id', 'parent', 'title', 'url'], 'required'],
+			[['menu_key', 'parent', 'title', 'url'], 'required'],
 
 			['title', 'string', 'min' => 1, 'max' => 255],
 			['url', 'string', 'min' => 1, 'max' => 255],

@@ -8,7 +8,7 @@ class Register extends \common\components\core\models\base\Action {
 
 	public function run(){
 		if(!\Yii::$app->user->isGuest){
-			return $this->goHome();
+			return $this->controller->goHome();
 		}
 		if(\Yii::$app->request->isAjax){
 			$create = new \common\components\core\models\processors\user\Register;

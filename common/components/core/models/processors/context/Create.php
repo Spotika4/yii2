@@ -40,7 +40,7 @@ class Create extends \common\components\core\models\base\processors\CreateProces
 	}
 
 	public function afterSave(){
-		$create = new \common\components\core\models\processors\resource\Create();
+		$create = new \common\components\core\models\processors\controller\Create();
 		$create->load([
 			'context_id' => $this->object->id,
 			'key' => 'index_default',

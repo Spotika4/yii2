@@ -16,7 +16,7 @@ use yii\helpers\Url;
 <script>
 	$(document).ready(function(){
 		let usersTable = $('#USERS_TABLE').app('table', {
-			url: '<?=Url::to(['users/get'])?>',
+			url: '<?=Url::to(['user/datatable'])?>',
 			order: [1, 'asc'],
 			columns: [
 				{

@@ -12,8 +12,8 @@ class Menu extends \common\components\core\models\base\ActiveRecord {
 
 	public function rules(){
 		return [
-			[['context_id', 'name'], 'required'],
-			[['name'], 'string', 'min' => 3, 'max' => 255],
+			[['context_key', 'key', 'name'], 'required'],
+			[['name', 'key'], 'string', 'min' => 3, 'max' => 255],
 		];
 	}
 }

@@ -80,7 +80,7 @@ AppAsset::register($this);
 					},
 				});
 			});
-				$('a.top_right_logout_title.dropdown-item').on('click', function(event){
+			$('a.top_right_logout_title.dropdown-item').on('click', function(event){
 				event.preventDefault();
 				$.fn.app('confirm', {
 					ajax: {
@@ -90,7 +90,7 @@ AppAsset::register($this);
 					message: '<?=Yii::t("core", "realy_logout")?>',
 					after: function(result){
 						if(result === true){
-							window.location.replace('<?=Yii::$app->urlManager->createAbsoluteUrl(['default/login'])?>')
+							setTimeout(function(){ document.location.href = '<?=Url::home(true)?>'; }, 1000);
 						}
 					}
 				});
@@ -108,9 +108,9 @@ AppAsset::register($this);
 		<a class="navbar-brand mb-0 h1 mr-xl-5 mr-lg-5 mr-md-5 mr-sm-0 mr-0" href="<?=Url::to(['default/index'])?>"><?=Html::encode(Yii::$app->name)?></a>
 		<div class="collapse navbar-collapse" id="navbar">
 			<? if(!Yii::$app->user->isGuest) : ?>
-				<?=NavbarWidget::widget(['id' => 1, 'lexicon' => 'backend'])?>
+				<?=NavbarWidget::widget(['key' => 'top_menu', 'lexicon' => 'backend'])?>
 				<ul class="navbar-nav mr-auto"></ul>
-				<?=NavbarWidget::widget(['id' => 2, 'lexicon' => 'backend'])?>
+				<?=NavbarWidget::widget(['key' => 'top_right_menu', 'lexicon' => 'backend'])?>
 			<? endif; ?>
 		</div>
 	</nav>

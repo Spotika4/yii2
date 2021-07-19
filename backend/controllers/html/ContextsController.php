@@ -21,15 +21,16 @@ class ContextsController extends \backend\models\base\HtmlController{
 	}
 
 	public function actionUpdate($id){
-		$listing = new Listing(['scenario' => Listing::SCENARIO_FOR_SELECT]);
-		$listing->load(['context_id' => $id, 'lexicon' => 'backend']);
-		$menus = $listing->process()->getData();
 		$read = new \common\components\core\models\processors\context\Read();
 		if(($read->load(['id' => $id])) && ($read->process()->getSuccess())){
+			$context = $read->getData();
+			$listing = new Listing(['scenario' => Listing::SCENARIO_FOR_SELECT]);
+			$listing->load(['context_key' => $context['key'], 'lexicon' => 'backend']);
+			$menus = $listing->process()->getData();
 			return $this->render('update',
 				[
 					'menus' => $menus,
-					'context' => $read->getData(),
+					'context' => $context,
 				]);
 		}
 		throw new \yii\web\NotFoundHttpException(Yii::t('core', 'error_not_found_message'));

@@ -91,7 +91,7 @@ class Processor extends Model {
 			'errors' => $this->getErrors(),
 			'success' => $this->getSuccess(),
 			'message' => $this->getMessage(),
-			'attributes' => $this->getAttributes(),
+			//'attributes' => $this->getAttributes(),
 		];
 	}
 }

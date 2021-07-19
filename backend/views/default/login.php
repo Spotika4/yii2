@@ -73,7 +73,7 @@ use yii\bootstrap4\ActiveForm;
 			},
 			after: function(result){
 				if(result.success === true){
-					window.location.replace('<?=Url::home()?>');
+					setTimeout(function(){ document.location.href = '<?=Url::home(true)?>'; }, 1000);
 				}
 			}
 		});

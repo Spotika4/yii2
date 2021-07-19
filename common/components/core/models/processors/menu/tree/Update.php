@@ -7,7 +7,7 @@ class Update extends \common\components\core\models\base\processors\UpdateProces
 
 
 	public $id;
-	public $menu_id;
+	public $menu_key;
 	public $parent;
 	public $title;
 	public $url;
@@ -18,8 +18,8 @@ class Update extends \common\components\core\models\base\processors\UpdateProces
 
 	public function rules(){
 		return [
-			[['id', 'menu_id', 'parent', 'title', 'url'], 'required'],
-			[['menu_id', 'parent', 'title', 'url', 'icon'], 'trim'],
+			[['id', 'menu_key', 'parent', 'title', 'url'], 'required'],
+			[['menu_key', 'parent', 'title', 'url', 'icon'], 'trim'],
 
 			['title', 'string', 'min' => 1, 'max' => 255],
 
@@ -44,7 +44,7 @@ class Update extends \common\components\core\models\base\processors\UpdateProces
 
 	public function scenarios(){
 		return [
-			self::SCENARIO_DEFAULT => ['id', 'menu_id', 'parent', 'title', 'url', 'icon', 'sort'],
+			self::SCENARIO_DEFAULT => ['id', 'menu_key', 'parent', 'title', 'url', 'icon', 'sort'],
 		];
 	}
 }

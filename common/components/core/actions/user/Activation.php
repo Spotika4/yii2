@@ -7,6 +7,9 @@ class Activation extends \common\components\core\models\base\Action {
 
 
 	public function run(){
+		if(!\Yii::$app->user->isGuest){
+			return $this->controller->goHome();
+		}
 		$processor = new \common\components\core\models\processors\user\Activate();
 		if($processor->load(\Yii::$app->request->get()) && $processor->process()->getSuccess()){
 			return $this->controller->render('message', [

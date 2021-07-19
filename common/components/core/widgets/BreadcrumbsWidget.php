@@ -19,13 +19,14 @@ class BreadcrumbsWidget extends \yii\base\Widget{
 
 	public function run(){
 		if($core = $this->module->get('core', false)){
-			if(!$core->resource) return false;
+			if(!$core->controller) return false;
 
 			$breadcrumbs = [];
-			$home = $core->getHomeResource();
+			$home = $core->getHomeController();
+			$home['url'] = \Yii::$app->getHomeUrl();
 			$home['display'] = \Yii::t($this->lexicon, $home['title']);
 
-			$current = $core->resource->toArray();
+			$current = $core->controller->toArray();
 			$current['display'] = \Yii::t($this->lexicon, $current['title']);
 			array_unshift($breadcrumbs, $current);
 

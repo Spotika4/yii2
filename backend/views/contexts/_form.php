@@ -84,7 +84,8 @@ use yii\bootstrap4\ActiveForm;
 											<div class="col-7 p-0">
 												<div class="input-group input-group-sm">
 													<?=Html::dropDownList('status',
-														'menu', $menus,
+														'menu',
+														$menus,
 														[
 															'id' => 'MENU_SELECT',
 															'class' => 'form-control',
@@ -212,7 +213,19 @@ use yii\bootstrap4\ActiveForm;
 				<div class="modal-body">
 					<?php $form = ActiveForm::begin(['enableClientScript' => false, 'id' => 'MENU_FORM', 'action' => '#']); ?>
 					<?=Html::tag('input', false, ['type' => 'hidden', 'name' => 'id', 'value' => ''])?>
-					<?=Html::tag('input', false, ['type' => 'hidden', 'name' => 'context_id', 'value' => $context['id']])?>
+					<?=Html::tag('input', false, ['type' => 'hidden', 'name' => 'key', 'value' => ''])?>
+					<?=Html::tag('input', false, ['type' => 'hidden', 'name' => 'context_key', 'value' => $context['key']])?>
+					<div class="form-group">
+						<?=Html::tag('label', Yii::t('core', 'key'))?>
+						<?=Html::tag('input',
+							'',
+							[
+								'type' => 'text',
+								'name' => 'key',
+								'class' => 'form-control',
+								'placeholder' => Yii::t('core', 'key')
+							])?>
+					</div>
 					<div class="form-group">
 						<?=Html::tag('label', Yii::t('core', 'title'))?>
 						<?=Html::tag('input',
@@ -245,7 +258,7 @@ use yii\bootstrap4\ActiveForm;
 				<div class="modal-body">
 					<?php $form = ActiveForm::begin(['enableClientScript' => false, 'id' => 'MENU_TREE_FORM', 'action' => '#']); ?>
 					<?=Html::tag('input', false, ['type' => 'hidden', 'name' => 'id', 'value' => ''])?>
-					<?=Html::tag('input', false, ['type' => 'hidden', 'name' => 'menu_id', 'value' => ''])?>
+					<?=Html::tag('input', false, ['type' => 'hidden', 'name' => 'menu_key', 'value' => ''])?>
 					<div class="form-row">
 						<div class="form-group col-6">
 							<?=Html::tag('label', Yii::t('core', 'parent'))?>
@@ -458,7 +471,7 @@ use yii\bootstrap4\ActiveForm;
 			form.find('input[name="id"]').val('');
 			form.find('input[type="text"]').val('');
 			modal.find('h5.modal-title').text(title);
-			form.find('input[name="menu_id"]').val(menuselect.val());
+			form.find('input[name="menu_key"]').val(menuselect.val());
 			if(selected !== false){
 				form.find('input[name="parent"]').val(selected.data.id);
 			}
@@ -532,7 +545,7 @@ use yii\bootstrap4\ActiveForm;
 
 		function LOAD_MENU_TREE(reload = false){
 			let url = '<?=Url::to(['menu-tree/tree'])?>';
-			let data = {'menu_id': $("#MENU_SELECT").val(), 'lexicon': 'backend' };
+			let data = {'menu_key': $("#MENU_SELECT").val(), 'lexicon': 'backend' };
 			if(reload === true){
 				$('#MENU_TREE_WRAPPER').app('jstree', {
 					reload: true, url: url, data: data
@@ -568,7 +581,7 @@ use yii\bootstrap4\ActiveForm;
 		function UPDATE_MENU_SELECT(selected){
 			$.fn.app('ajax', {
 				url: '<?=Url::to(['menu/listing'])?>',
-				data: {'context_id': <?=$context['id']?>, 'lexicon': 'backend'},
+				data: {'context_key': "<?=$context['key']?>", 'lexicon': 'backend'},
 				success: function(result){
 					$("#MENU_SELECT option").remove();
 					$.each(result.data, function(i, row) {
@@ -701,15 +714,29 @@ use yii\bootstrap4\ActiveForm;
 				form.find('input[name="id"]').val('');
 				form.find('input[name="name"]').val('');
 
+				form.find('input[name="key"]').val('');
+				form.find('input[name="key"][type="text"]').attr('disabled', false);
+				form.find('input[name="key"][type="hidden"]').attr('disabled', true);
+
 				form.find('input[name="context_id"]').val(<?=$context['id']?>);
 				if($(this).attr('data-action') === 'create'){
 					form.attr('action', '<?=Url::to(['menu/create'])?>');
 					modal.find('h5.modal-title').text("<?=Yii::t('core', 'object_action_create')?>");
 				}else if($(this).attr('data-action') === 'update'){
-					form.find('input[name="id"]').val(menuselect.val());
-					form.find('input[name="name"]').val(menuselect.text());
-					form.attr('action', '<?=Url::to(['menu/update'])?>');
-					modal.find('h5.modal-title').text("<?=Yii::t('core', 'object_action_update')?>");
+					$.fn.app('ajax', {
+						url: '<?=Url::to(['menu/read'])?>',
+						data: {'key': menuselect.val()},
+						success: function(result){
+							form.find('input[name="key"][type="text"]').attr('disabled', true);
+							form.find('input[name="key"][type="hidden"]').attr('disabled', false);
+
+							form.find('input[name="id"]').val(result.data.id);
+							form.find('input[name="key"]').val(result.data.key);
+							form.find('input[name="name"]').val(result.data.name);
+							form.attr('action', '<?=Url::to(['menu/update'])?>');
+							modal.find('h5.modal-title').text("<?=Yii::t('core', 'object_action_update')?>");
+						}
+					});
 				}
 				modal.modal('show');
 			});
@@ -718,11 +745,15 @@ use yii\bootstrap4\ActiveForm;
 			$("#MENU_FORM").app('validate', {
 				reset: true,
 				rules: {
-					context_id: {
+					context_key: {
 						minlength: 1,
 						required: true
 					},
 					name: {
+						minlength: 3,
+						required: true
+					},
+					key: {
 						minlength: 3,
 						required: true
 					}
@@ -730,11 +761,11 @@ use yii\bootstrap4\ActiveForm;
 				after: function(result){
 					if(result.success === true){
 						if(result.data.id){
-							UPDATE_MENU_SELECT(result.data.id);
+							UPDATE_MENU_SELECT(result.data.key);
 						}else{
-							UPDATE_MENU_SELECT(result.attributes.id);
+							UPDATE_MENU_SELECT(result.attributes.key);
 						}
-						UPDATE_MENU_SELECT(result.data.id);
+						UPDATE_MENU_SELECT(result.data.key);
 						$('#MENU_MODAL').modal('hide');
 					}
 				}
@@ -754,7 +785,7 @@ use yii\bootstrap4\ActiveForm;
 					ajax: {
 						url: '<?=Url::to(['menu/delete'])?>',
 						data:{
-							id: menuselect.val()
+							key: menuselect.val()
 						}
 					},
 					title: title,

@@ -6,24 +6,24 @@ namespace common\components\core\models\processors\menu;
 class Read extends \common\components\core\models\base\processors\ReadProcessor{
 
 
-	public $id;
+	public $key;
 
 
 	public function scenarios(){
 		return [
-			self::SCENARIO_DEFAULT => ['id']
+			self::SCENARIO_DEFAULT => ['key']
 		];
 	}
 
 	public function rules(){
 		return [
-			[['id'], 'required'],
+			[['key'], 'required'],
 		];
 	}
 
 	public function query(){
 		return \common\components\core\models\ar\Menu::find()
-			->select(['id', 'context_id', 'name'])
-			->where(['id' => $this->id]);
+			->select(['id', 'context_key', 'key', 'name'])
+			->where(['key' => $this->key]);
 	}
 }

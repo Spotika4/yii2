@@ -41,7 +41,7 @@ class DatatablesProcessor extends \common\components\core\models\base\Processor 
 		]);
 		return [
 			'data' => $provider->getModels(),
-			'attributes' => $this->getAttributes(),
+			//'attributes' => $this->getAttributes(),
 			'recordsTotal' => $provider->getTotalCount(),
 			'recordsFiltered' => $provider->getTotalCount(),
 		];

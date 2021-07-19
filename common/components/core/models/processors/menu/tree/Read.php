@@ -23,7 +23,7 @@ class Read extends \common\components\core\models\base\processors\ReadProcessor{
 
 	public function query(){
 		return \common\components\core\models\ar\MenuTree::find()
-			->select(['id', 'menu_id', 'parent', 'title', 'url', 'icon', 'sort'])
+			->select(['id', 'menu_key', 'parent', 'title', 'url', 'icon', 'sort'])
 			->where(['id' => $this->id]);
 	}
 }
