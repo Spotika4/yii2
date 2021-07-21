@@ -14,7 +14,7 @@ class DefaultController extends \backend\models\base\HtmlController {
 		$behaviors['access']['rules'][] = [
 			'allow' => true,
 			'actions' => [
-				'index', 'error', 'login', 'recovery', 'reset'
+				'error', 'login', 'recovery', 'reset'
 			]
 		];
 		return $behaviors;

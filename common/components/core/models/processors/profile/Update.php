@@ -35,7 +35,7 @@ class Update extends \common\components\core\models\base\Processor {
 			['email', 'unique', 'targetClass' => 'common\components\core\models\ar\User', 'filter' => ['!=', 'id', Yii::$app->user->identity->getId()]],
 			['email', 'unique', 'targetClass' => 'common\components\core\models\ar\User',
 				'filter' => ['=', 'id', Yii::$app->user->identity->getId()],
-				'message' => Yii::t('core/user', 'user_email_need_new'),
+				'message' => Yii::t('core', 'user_email_need_new'),
 			],
 
 			[['password', 'passwordr'], 'required'],
@@ -50,9 +50,9 @@ class Update extends \common\components\core\models\base\Processor {
 
 	public function attributeLabels(){
 		return [
-			'email' => Yii::t('core/user', 'user_lbl_email'),
-			'password' => Yii::t('core/user', 'user_lbl_password'),
-			'passwordr' => Yii::t('core/user', 'user_lbl_passwordr'),
+			'email' => Yii::t('core', 'email'),
+			'password' => Yii::t('core', 'password'),
+			'passwordr' => Yii::t('core', 'passwordr'),
 		];
 	}
 
@@ -61,9 +61,11 @@ class Update extends \common\components\core\models\base\Processor {
 			$user->setOption('email_reset', $this->email);
 			$token = $user->generateToken('email_reset_token');
 			$params = ['user' => $user, 'token' => $token];
-			$subject = Yii::t('core/user', 'user_email_update_info_subject');
-			if($user->send('emailUpdate', $params, $subject)){
-				$this->addMessage(Yii::t('core/user', 'user_email_check_send_success'));
+			$subject = Yii::t('core', 'user_email_update_info_subject');
+			$core = \Yii::$app->controller->module->get('core', false);
+			//if($user->send('emailUpdate', $params, $subject)){
+			if($core->sendMail($user->email, $subject, 'emailUpdate', $params)){
+				$this->addMessage(Yii::t('core', 'user_email_check_send_success'));
 				return true;
 			}
 			$this->addMessage(\Yii::t('core', 'mail_send_error'));
@@ -78,7 +80,7 @@ class Update extends \common\components\core\models\base\Processor {
 			if($user->save(false)){
 				$user->deleteOption('email_reset');
 				$user->deleteOption('email_reset_token');
-				$this->addMessage(Yii::t('core/user', 'user_email_activation_success'));
+				$this->addMessage(Yii::t('core', 'user_email_activation_success'));
 				return true;
 			}
 		}
@@ -89,7 +91,7 @@ class Update extends \common\components\core\models\base\Processor {
 		if($user = User::findOne(['id' => Yii::$app->user->identity->getId()])){
 			$user->setPassword($this->password);
 			if($user->save(false)){
-				$this->addMessage(Yii::t('core/user', 'user_change_pass_success'));
+				$this->addMessage(Yii::t('core', 'user_change_pass_success'));
 				return true;
 			}
 		}
