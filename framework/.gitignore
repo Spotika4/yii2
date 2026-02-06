@@ -1,0 +1,81 @@
+# phpstorm project files
+.idea
+
+# netbeans project files
+nbproject
+
+# zend studio for eclipse project files
+.buildpath
+.project
+.settings
+
+# windows thumbnail cache
+Thumbs.db
+
+# composer vendor dir
+vendor
+
+# composer itself is not needed
+composer.phar
+
+# Mac DS_Store Files
+.DS_Store
+
+# phpunit itself is not needed
+phpunit.phar
+# local phpunit config
+/phpunit.xml
+
+# ignore generated files
+
+#
+tests/
+fixtures/
+vagrant/
+Dockerfile
+Vagrantfile
+composer.lock
+codeception.yml
+docker-compose.yml
+
+# composer
+vendor/
+
+# vagrant runtime
+.vagrant
+
+# runtime
+runtime/
+backend/runtime/
+console/runtime/
+frontend/runtime/
+
+# assets
+backend/web/*
+frontend/web/*
+console/web/*
+
+# cache
+backend/web/cache/
+frontend/web/cache/
+
+# local configs
+common/config/main-local.php
+common/config/params-local.php
+console/config/main-local.php
+console/config/params-local.php
+backend/config/main-local.php
+backend/config/params-local.php
+frontend/config/main-local.php
+frontend/config/params-local.php
+
+# ide
+.idea/
+*.swp
+*.swo
+*~
+.settings/
+
+# local db
+*.sql
+*.sqlite
